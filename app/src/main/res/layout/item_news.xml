@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/new_item_bg"
+    android:padding="10dp"
+    tools:context="me.chunsheng.mvp.MainActivity$PlaceholderFragment">
+
+
+    <ImageView
+        android:id="@+id/news_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        android:src="@mipmap/tip_no_network" />
+
+    <TextView
+        android:id="@+id/news_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/news_pic"
+        android:text="苹果真要出iPhonePro了？！这是什么东西？"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/news_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/news_title"
+        android:text="苹果园越狱助手"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/news_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/news_title"
+        android:layout_toRightOf="@id/news_from"
+        android:drawableLeft="@android:drawable/ic_lock_idle_alarm"
+        android:paddingLeft="20dp"
+        android:text="1小时前"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/news_love"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/news_title"
+        android:drawableLeft="@mipmap/love"
+        android:paddingLeft="20dp"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:textStyle="italic" />
+
+
+</RelativeLayout>
