@@ -1,5 +1,6 @@
-package me.chunsheng.mvp;
+package me.chunsheng.newsdetail;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -19,8 +21,9 @@ import com.squareup.picasso.Target;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.chunsheng.modles.NewsItem;
+import me.chunsheng.mvp.R;
 
-public class NewsDetailActivity extends AppCompatActivity {
+public class NewsDetailActivity extends AppCompatActivity implements NewsDetailView {
 
 
     @Bind(R.id.nestedScrollview)
@@ -30,7 +33,9 @@ public class NewsDetailActivity extends AppCompatActivity {
     @Bind(R.id.webview)
     WebView webview;
 
+    ProgressDialog progressDialog;
     NewsItem newsItem;
+    NewsDetailPresenterImpl newsDetailPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,9 @@ public class NewsDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        newsDetailPresenter = new NewsDetailPresenterImpl(this);
+        newsDetailPresenter.showProgress();
 
         if (newsItem != null) {
             toolbar_layout.setCollapsedTitleTextAppearance(R.style.NewsDetailTitleSmall);
@@ -73,8 +81,6 @@ public class NewsDetailActivity extends AppCompatActivity {
             };
             if (newsItem.getFirstImg().length() > 5)
                 Picasso.with(this).load(newsItem.getFirstImg()).into(target);
-
-            webview.loadUrl(newsItem.getUrl());
             //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
             webview.setWebViewClient(new WebViewClient() {
                 @Override
@@ -83,10 +89,18 @@ public class NewsDetailActivity extends AppCompatActivity {
                     view.loadUrl(url);
                     return true;
                 }
+
+            });
+
+            webview.setWebChromeClient(new WebChromeClient() {
+                public void onProgressChanged(WebView view, int progress) {
+                    if (progress > 70)
+                        newsDetailPresenter.hideProgress();
+                }
             });
             WebSettings settings = webview.getSettings();
             settings.setJavaScriptEnabled(true);
-
+            newsDetailPresenter.loadNews();
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -105,5 +119,33 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webview.destroy();
+    }
 
+    @Override
+    public void showProgress() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this.getApplicationContext());
+            progressDialog.setMessage("拼命加载新闻哇...");
+        } else {
+            progressDialog.show();
+        }
+    }
+
+    @Override
+    public void hideProgress() {
+        if (progressDialog != null) {
+            progressDialog.hide();
+            progressDialog = null;
+        }
+    }
+
+    @Override
+    public void loadNews() {
+        if (newsItem != null)
+            webview.loadUrl(newsItem.getUrl());
+    }
 }

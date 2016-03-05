@@ -3,7 +3,6 @@ package me.chunsheng.love;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,7 +25,7 @@ import butterknife.ButterKnife;
 import me.chunsheng.adapters.NewsRecyclerViewAdapter;
 import me.chunsheng.adapters.RecyclerItemClickListener;
 import me.chunsheng.modles.NewsItem;
-import me.chunsheng.mvp.NewsDetailActivity;
+import me.chunsheng.newsdetail.NewsDetailActivity;
 import me.chunsheng.mvp.R;
 import me.chunsheng.utils.OKHttpUtils;
 
@@ -101,11 +100,16 @@ public class LoveFragment extends Fragment implements LoveView {
     @Override
     public void showPoregress() {
         if (progressBar != null) {
-            progressBar.show();
+            //progressBar.show();
         } else {
-            progressBar = new ProgressDialog(getActivity());
+            progressBar = new ProgressDialog(getActivity().getApplicationContext());
             progressBar.setMessage("       Loading...٩(͡๏̯͡๏)۶");
-            progressBar.show();
+            try {
+                //if (this.isVisible() && getActivity().isFinishing())
+                    //progressBar.show();
+
+            } catch (Exception e) {
+            }
         }
     }
 
@@ -119,6 +123,21 @@ public class LoveFragment extends Fragment implements LoveView {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (progressBar != null) {
+            progressBar.dismiss();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //if (!isVisibleToUser)
+            //progressBar.dismiss();
     }
 
     //获取数据

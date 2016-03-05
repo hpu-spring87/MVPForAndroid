@@ -20,9 +20,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import me.chunsheng.love.LoveFragment;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import me.chunsheng.love.LoveFragment;
+import me.chunsheng.modles.MovieItem;
+import me.chunsheng.movie.MovieFragment;
+
+public class MainActivity extends AppCompatActivity implements MovieFragment.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -94,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onListFragmentInteraction(MovieItem item) {
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -145,6 +154,8 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0) {
                 return LoveFragment.newInstance(position + 1);
+            } else if (position == 1) {
+                return MovieFragment.newInstance(position);
             } else {
                 return PlaceholderFragment.newInstance(position + 1);
             }
@@ -162,9 +173,9 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return "微信精选";
                 case 1:
-                    return "SECTION 2";
+                    return "最美电影";
                 case 2:
-                    return "SECTION 3";
+                    return "星座运势";
             }
             return null;
         }
