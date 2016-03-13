@@ -23,7 +23,12 @@
         <activity
             android:name="me.chunsheng.newsdetail.NewsDetailActivity"
             android:label="@string/title_activity_news_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="me.chunsheng.xingzuodetail.XingzuoDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_xingzuo_detail"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">抓聚</string>
+    <string name="app_name">容</string>
     <string name="action_settings">关于</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
@@ -95,4 +95,8 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+
+    <string name="title_activity_xingzuo_detail">" "</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

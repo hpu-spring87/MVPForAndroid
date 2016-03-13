@@ -1,8 +1,11 @@
 package me.chunsheng.mvp;
 
+import android.app.Dialog;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -25,6 +28,7 @@ import java.util.List;
 import me.chunsheng.love.LoveFragment;
 import me.chunsheng.modles.MovieItem;
 import me.chunsheng.movie.MovieFragment;
+import me.chunsheng.xingzuo.XingZuoFragment;
 
 public class MainActivity extends AppCompatActivity implements MovieFragment.OnListFragmentInteractionListener {
 
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements MovieFragment.OnL
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("抓聚");
+        toolbar.setTitle("容");
         toolbar.hideOverflowMenu();
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements MovieFragment.OnL
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "欢迎访问: http://chunsheng.me", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -91,7 +95,11 @@ public class MainActivity extends AppCompatActivity implements MovieFragment.OnL
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "一个MVP实例应用...", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("关于:");
+            dialog.setMessage("海纳百川,有容乃大,容者,汇聚也..."); //设置内容
+            dialog.setIcon(R.mipmap.love);//设置图标，图片id即可
+            dialog.show();
             return true;
         }
 
@@ -156,6 +164,8 @@ public class MainActivity extends AppCompatActivity implements MovieFragment.OnL
                 return LoveFragment.newInstance(position + 1);
             } else if (position == 1) {
                 return MovieFragment.newInstance(position);
+            } else if (position == 2) {
+                return new XingZuoFragment();
             } else {
                 return PlaceholderFragment.newInstance(position + 1);
             }
@@ -173,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements MovieFragment.OnL
                 case 0:
                     return "微信精选";
                 case 1:
-                    return "最美电影";
+                    return "最新电影";
                 case 2:
                     return "星座运势";
             }
